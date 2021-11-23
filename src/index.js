@@ -17,9 +17,41 @@ const GlobalStyle = createGlobalStyle`
         background-color: ${colors.secondary};
     }
 
+    main {
+      background-color: #fff;
+      max-width: 1240px;
+      width: 100%;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     code {
       font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
+    }
+
+    ol,ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a :visited {
+      color: inherit;
     }
 `
 

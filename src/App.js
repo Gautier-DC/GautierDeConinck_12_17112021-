@@ -4,11 +4,13 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import Header from './Components/Header';
 
 function App() {
   return (
     <Router>
-
+      <Header/>
+      
     </Router>
   );
 }
