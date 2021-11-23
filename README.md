@@ -10,9 +10,10 @@ You need to install Node.js v14.15.4 or latestversion.
 ## Used Technologies
 
 - React :
-    - Create react app (`npx create-react-app sportsee`)
-    - PropTypes (`npm install --save prop-types`)
-    - Styled-components (`npm install --save styled-components`)
+  - Create react app (`npx create-react-app sportsee`)
+  - PropTypes (`npm install --save prop-types`)
+  - ReactRouter (`npm install react-router-dom`)
+  - Styled-components (`npm install --save styled-components`)
 - Axios (`npm install axios`)
 - ReCharts (`npm install recharts`)
 
