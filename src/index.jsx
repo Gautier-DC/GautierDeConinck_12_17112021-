@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {createGlobalStyle} from 'styled-components';
+import normalize from './normalize.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import colors from './utils/style/colors';
@@ -8,6 +9,8 @@ import colors from './utils/style/colors';
 const GlobalStyle = createGlobalStyle`
 
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+    ${normalize};
 
     body {
         font-family: 'Roboto', sans-serif;
