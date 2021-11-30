@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const HeaderContainer = styled.header`
     padding: 30px;
     max-height: 91px;
-    max-width: 1240px;
+    max-width: 1440px;
     margin: auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: flex;

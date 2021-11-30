@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Text, Label } from "recharts";
 import colors from "../../utils/style/colors";
 import styled from "styled-components";
 
@@ -8,6 +8,13 @@ const StyledTooltip = styled.div`
   font-size: 0.5em;
   text-align: center;
   height: 63px;
+`
+
+const RpCtr = styled(ResponsiveContainer)`
+    background-color: ${colors.bglight};
+    border-radius: 5px;
+    max-width: 835px;
+    height: 320px;
 `
 
 const data = [
@@ -75,7 +82,7 @@ const data = [
 
 export default function DailyActivity() {
   return (
-    <ResponsiveContainer width="100%" height={320}>
+    <RpCtr height={320}>
       <BarChart
         width={500}
         height={300}
@@ -90,18 +97,18 @@ export default function DailyActivity() {
         barGap={10}
       >
         <CartesianGrid strokeDasharray="1" opacity={0.7} vertical={false} />
-        <XAxis opacity={0.5} tickLine={false} tickCount={10} dataKey="name" />
-        <YAxis axisLine={false} tickLine={false} tickCount={3} orientation="right" />
+        <XAxis dy={20} interval="preserveStartEnd" opacity={0.5} tickLine={false} dataKey="name" stroke="#95a5a6"/>
+        <YAxis dx={10} axisLine={false} tickLine={false} tickCount={3} orientation="right" stroke="#95a5a6" />
         <Tooltip cursor={{fill: '#C4C4C4'}} active={true}
             wrapperStyle={{
               visibility: 'visible',
             }}
             content={<CustomTooltip />}/>
-        <Legend wrapperStyle={{left: '55%', top: '0'}} iconType='circle' iconSize='8'/>'
+        <Legend wrapperStyle={{right: '0', top: '0'}} align='right' iconType='circle' iconSize='8'/>'
         <Bar dataKey="pv" fill={`${colors.tertiary}`} radius={[6, 6, 0, 0]} />
         <Bar dataKey="uv" fill={`${colors.primary}`} radius={[6, 6, 0, 0]} />
       </BarChart>
-    </ResponsiveContainer>
+    </RpCtr>
   );
 }
 

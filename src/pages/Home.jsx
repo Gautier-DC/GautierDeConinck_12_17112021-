@@ -29,6 +29,7 @@ const HelloUser = styled.h1`
 `
 
 const DashboardCtnr = styled.div`
+    padding: 3em 0;
     height: 100%;
     display: flex;
     flex-direction: row;
