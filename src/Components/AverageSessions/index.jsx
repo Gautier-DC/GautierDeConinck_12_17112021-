@@ -1,12 +1,12 @@
-import React from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, { useState } from "react";
+import { LineChart, Line, XAxis, ReferenceArea, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
 
 const RespCtr = styled(ResponsiveContainer)`
-    background-color: ${colors.primary};
-    border-radius: 5px;
-`
+  background-color: ${colors.primary};
+  border-radius: 5px;
+`;
 
 const data = [
   {
@@ -72,16 +72,19 @@ const data = [
 ];
 
 export default function AverageSessions() {
+  const [activeLabel, setActiveLabel] = useState("10");
+
   return (
     <RespCtr width="33%" height={263}>
-        <LineChart data={data} margin={{top: 50}}>
-            <text x={34} y={29} fill="#fff" fontSize={15} opacity={0.5} dominantBaseline="middle">
-              Durée moyenne des sessions
-            </text>
-            <Line type="monotone" dot={false} dataKey="pv" stroke="#fff" strokeWidth={2} />
-            <XAxis stroke="#bdc3c7" opacity={0.6} axisLine={false} tickLine={false} tickCount={10} dataKey="name" />
-            <Tooltip />
-        </LineChart>
+      <LineChart onMouseMove={(e) => setActiveLabel(e.activeLabel)} data={data} margin={{ top: 50 }}>
+        <text x={34} y={29} fill="#fff" fontSize={15} opacity={0.5} dominantBaseline="middle">
+          Durée moyenne des sessions
+        </text>
+        <Line type="monotone" dot={false} dataKey="pv" stroke="#fff" strokeWidth={2} />
+        <XAxis stroke="#bdc3c7" opacity={0.6} axisLine={false} tickLine={false} tickCount={10} dataKey="name" />
+        <Tooltip />
+        <ReferenceArea x1={activeLabel} x2="10" y1={0} y2={10000} strokeOpacity={0.5} />
+      </LineChart>
     </RespCtr>
   );
 }

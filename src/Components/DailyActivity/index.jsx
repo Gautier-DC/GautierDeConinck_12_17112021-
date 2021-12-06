@@ -9,6 +9,11 @@ const StyledTooltip = styled.div`
   font-size: 0.5em;
   text-align: center;
   height: 63px;
+  min-width: 39px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const RpCtr = styled(ResponsiveContainer)`
@@ -107,8 +112,8 @@ export default function DailyActivity() {
         <XAxis
           dy={20}
           padding={{
-            right: -20,
-            left: -20,
+            right: -25,
+            left: -25,
           }}
           opacity={0.5}
           tickLine={false}
@@ -118,12 +123,7 @@ export default function DailyActivity() {
         />
         <YAxis dx={10} axisLine={false} tickLine={false} tickCount={3} orientation="right" stroke="#95a5a6" />
         <Tooltip
-          cursor={{ fill: "#C4C4C4" }}
-          active={true}
-          wrapperStyle={{
-            visibility: "visible",
-          }}
-          content={<CustomTooltip active label="test" />}
+          content={<CustomTooltip />}
         />
         <Legend wrapperStyle={{ right: 10, top: 15 }} align="right" iconType="circle" iconSize="8" formatter={renderGreyLegendText} />'
         <Bar dataKey="pv" fill={`${colors.tertiary}`} radius={[6, 6, 0, 0]} />
@@ -134,6 +134,7 @@ export default function DailyActivity() {
 }
 
 function CustomTooltip({ active, payload, label }) {
+  console.log('++++', active)
   if (active) {
     return (
       <StyledTooltip>

@@ -10,9 +10,12 @@ const LeftContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    flex-basis: 65%;
+    flex-basis: 100%;
     max-width: 835px;
     height: 70vh;
+    @media (min-width: 1200px) {
+        flex-basis: 65%;
+    }
 `
 
 const UnderDshbrd = styled.div`

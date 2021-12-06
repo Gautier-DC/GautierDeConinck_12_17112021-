@@ -9,20 +9,18 @@ const VerticalNav = styled.aside`
     height: 100%;
     padding: 0 27px;
     height: calc(100vh - 91px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-self: center;
+    float: left;
     max-width: 117px;
     position: relative;
 `
 
 const IconsWrapper = styled.div`
-    flex-basis: 40%;
+    height: 40%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    margin-top: 12rem;
 `
 
 const IconContainer = styled.div`

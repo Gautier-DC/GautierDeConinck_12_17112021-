@@ -12,7 +12,6 @@ const MainContent = styled.section`
     justify-content: flex-start;
     flex-grow: 1;
     height: 100vh;
-    z-index: -1;
     padding: 4.5em 6.5em;
 
     p {
@@ -31,7 +30,7 @@ const HelloUser = styled.h1`
 
 const DashboardCtnr = styled.div`
     padding: 3em 0;
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -23,11 +23,8 @@ const GlobalStyle = createGlobalStyle`
     main {
       max-width: 1440px;
       width: 100%;
+      height: 100%;
       margin: auto;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
     }
 
     code {
