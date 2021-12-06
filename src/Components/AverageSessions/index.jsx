@@ -1,3 +1,4 @@
+import React from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
@@ -72,9 +73,12 @@ const data = [
 
 export default function AverageSessions() {
   return (
-    <RespCtr width={258} height={263}>
-        <LineChart width={300} height={100} data={data} margin={{top: 50}}>
-            <Line type="monotone" dataKey="pv" stroke="#fff" strokeWidth={2} />
+    <RespCtr width="33%" height={263}>
+        <LineChart data={data} margin={{top: 50}}>
+            <text x={34} y={29} fill="#fff" fontSize={15} opacity={0.5} dominantBaseline="middle">
+              Durée moyenne des sessions
+            </text>
+            <Line type="monotone" dot={false} dataKey="pv" stroke="#fff" strokeWidth={2} />
             <XAxis stroke="#bdc3c7" opacity={0.6} axisLine={false} tickLine={false} tickCount={10} dataKey="name" />
             <Tooltip />
         </LineChart>

@@ -1,6 +1,9 @@
+import React from "react";
 import styled from 'styled-components';
 import DailyActivity from '../DailyActivity';
 import AverageSessions from '../AverageSessions';
+import RadarStats from '../RadarStats';
+import ScoreChart from "../ScoreChart";
 
 const LeftContainer = styled.div`
     display: flex;
@@ -8,22 +11,28 @@ const LeftContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     flex-basis: 65%;
-    height: 100%;
+    max-width: 835px;
+    height: 70vh;
 `
 
 const UnderDshbrd = styled.div`
-    z-index: -2;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
+    flex-basis: 100%;
 `
 
 function LeftDashboard(){
     return(
         <LeftContainer>
             <DailyActivity />
+            <UnderDshbrd>
                 <AverageSessions />
+                <RadarStats />
+                <ScoreChart />
+            </UnderDshbrd>
         </LeftContainer>
     )
 }

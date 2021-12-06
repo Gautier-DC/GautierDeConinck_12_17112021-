@@ -1,3 +1,4 @@
+import React from "react";
 import styled from 'styled-components';
 import Aside from '../Components/Aside';
 import colors from '../utils/style/colors';
@@ -45,7 +46,7 @@ function Home(){
                 <HelloUser>Bonjour <span>Thomas</span></HelloUser>
                 <p>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
                 <DashboardCtnr>
-                    <LeftDashboard></LeftDashboard>
+                    <LeftDashboard/>
                     
                 </DashboardCtnr>
             </MainContent>

@@ -1,3 +1,4 @@
+import React from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Text, Label } from "recharts";
 import colors from "../../utils/style/colors";
 import styled from "styled-components";
@@ -8,14 +9,18 @@ const StyledTooltip = styled.div`
   font-size: 0.5em;
   text-align: center;
   height: 63px;
-`
+`;
 
 const RpCtr = styled(ResponsiveContainer)`
-    background-color: ${colors.bglight};
-    border-radius: 5px;
-    max-width: 835px;
-    height: 320px;
-`
+  background-color: ${colors.bglight};
+  border-radius: 5px;
+  max-width: 835px;
+  height: 320px;
+`;
+
+const GreyLegend = styled.span`
+  color: ${colors.lighttxt};
+`;
 
 const data = [
   {
@@ -82,10 +87,8 @@ const data = [
 
 export default function DailyActivity() {
   return (
-    <RpCtr height={320}>
+    <RpCtr width="100%" height={320}>
       <BarChart
-        width={500}
-        height={300}
         data={data}
         margin={{
           top: 100,
@@ -94,17 +97,35 @@ export default function DailyActivity() {
           bottom: 5,
         }}
         barSize={8}
+        maxBarSize={500}
         barGap={10}
       >
+        <text x={25} y={28} fill={`${colors.tertiary}`} fontSize={15} fontWeight={700} textAnchor="top-left" dominantBaseline="middle">
+          Activité quotidienne
+        </text>
         <CartesianGrid strokeDasharray="1" opacity={0.7} vertical={false} />
-        <XAxis dy={20} interval="preserveStartEnd" opacity={0.5} tickLine={false} dataKey="name" stroke="#95a5a6"/>
+        <XAxis
+          dy={20}
+          padding={{
+            right: -20,
+            left: -20,
+          }}
+          opacity={0.5}
+          tickLine={false}
+          dataKey="name"
+          stroke="#95a5a6"
+          width={400}
+        />
         <YAxis dx={10} axisLine={false} tickLine={false} tickCount={3} orientation="right" stroke="#95a5a6" />
-        <Tooltip cursor={{fill: '#C4C4C4'}} active={true}
-            wrapperStyle={{
-              visibility: 'visible',
-            }}
-            content={<CustomTooltip />}/>
-        <Legend wrapperStyle={{right: '0', top: '0'}} align='right' iconType='circle' iconSize='8'/>'
+        <Tooltip
+          cursor={{ fill: "#C4C4C4" }}
+          active={true}
+          wrapperStyle={{
+            visibility: "visible",
+          }}
+          content={<CustomTooltip active label="test" />}
+        />
+        <Legend wrapperStyle={{ right: 10, top: 15 }} align="right" iconType="circle" iconSize="8" formatter={renderGreyLegendText} />'
         <Bar dataKey="pv" fill={`${colors.tertiary}`} radius={[6, 6, 0, 0]} />
         <Bar dataKey="uv" fill={`${colors.primary}`} radius={[6, 6, 0, 0]} />
       </BarChart>
@@ -112,15 +133,19 @@ export default function DailyActivity() {
   );
 }
 
-function CustomTooltip({active, payload, label}){
-  if (active && payload && payload.length) {
+function CustomTooltip({ active, payload, label }) {
+  if (active) {
     return (
-        <StyledTooltip>
-          <p>{`${label}`}</p>
-          <p>{`${label}`}</p>
-        </StyledTooltip>
-    )
-  } 
-  
+      <StyledTooltip>
+        <p>{`${label}`}</p>
+        <p>{`${label}`}</p>
+      </StyledTooltip>
+    );
+  }
+
   return null;
+}
+
+function renderGreyLegendText(value) {
+  return <GreyLegend>{value}</GreyLegend>;
 }
