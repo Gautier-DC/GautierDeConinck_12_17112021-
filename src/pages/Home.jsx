@@ -3,20 +3,17 @@ import styled from 'styled-components';
 import Aside from '../Components/Aside';
 import colors from '../utils/style/colors';
 import LeftDashboard from '../Components/LeftDashboard';
-//import RightDashboard from '../Components/RightDashboard';
+import RightDashboard from '../Components/RightDashboard';
 
 const MainContent = styled.section`
     background-color: rgb(255, 255, 255);
+    box-shadow: inset 0px 11px 8px -10px rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     flex-grow: 1;
     height: 100vh;
     padding: 4.5em 6.5em;
-
-    p {
-        font-size: 1.15em;
-    }
 `
 
 const HelloUser = styled.h1`
@@ -26,6 +23,9 @@ const HelloUser = styled.h1`
     span{
         color: ${colors.primary};
     }
+`
+const Baseline = styled.p`
+    font-size: 1.15em;
 `
 
 const DashboardCtnr = styled.div`
@@ -43,10 +43,10 @@ function Home(){
             <Aside />
             <MainContent>
                 <HelloUser>Bonjour <span>Thomas</span></HelloUser>
-                <p>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
+                <Baseline>Félicitation ! Vous avez explosé vos objectifs hier 👏</Baseline>
                 <DashboardCtnr>
                     <LeftDashboard/>
-                    
+                    <RightDashboard/>
                 </DashboardCtnr>
             </MainContent>
         </main>

@@ -20,7 +20,7 @@ const RpCtr = styled(ResponsiveContainer)`
   background-color: ${colors.bglight};
   border-radius: 5px;
   max-width: 835px;
-  height: 320px;
+  height: 50%;
 `;
 
 const GreyLegend = styled.span`

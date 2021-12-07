@@ -10,12 +10,9 @@ const LeftContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    flex-basis: 100%;
     max-width: 835px;
     height: 70vh;
-    @media (min-width: 1200px) {
-        flex-basis: 65%;
-    }
+    flex-basis: 70%;
 `
 
 const UnderDshbrd = styled.div`
@@ -23,8 +20,8 @@ const UnderDshbrd = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    flex-basis: 100%;
+    align-items: flex-end;
+    height: 50%;
 `
 
 function LeftDashboard(){

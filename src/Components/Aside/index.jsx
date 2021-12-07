@@ -6,16 +6,14 @@ import {ReactComponent as DumbbellIcon} from'../../assets/icons/dumbbell.svg'
 
 
 const VerticalNav = styled.aside`
-    height: 100%;
     padding: 0 27px;
     height: calc(100vh - 91px);
-    float: left;
     max-width: 117px;
     position: relative;
 `
 
 const IconsWrapper = styled.div`
-    height: 40%;
+    height: 45%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -43,7 +41,7 @@ const Copyright = styled.p`
     transform: rotate(-90deg);
     white-space: nowrap;
     position: absolute;
-    bottom: 6em;
+    bottom: 4em;
     right: 0;
     left: 0;
 `
