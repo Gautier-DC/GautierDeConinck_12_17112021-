@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LineChart, Line, XAxis, ReferenceArea, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, ReferenceArea, Tooltip, Legend, ResponsiveContainer, YAxis } from "recharts";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
 
@@ -78,12 +78,16 @@ export default function AverageSessions() {
     <RespCtr width="33%" height={263}>
       <LineChart onMouseMove={(e) => setActiveLabel(e.activeLabel)} data={data} margin={{ top: 50 }}>
         <text x={34} y={29} fill="#fff" fontSize={15} opacity={0.5} dominantBaseline="middle">
-          Durée moyenne des sessions
+          Durée moyenne des
+        </text>
+        <text x={34} y={50} fill="#fff" fontSize={15} opacity={0.5} dominantBaseline="middle">
+          sessions
         </text>
         <Line type="monotone" dot={false} dataKey="pv" stroke="#fff" strokeWidth={2} />
         <XAxis stroke="#bdc3c7" opacity={0.6} axisLine={false} tickLine={false} tickCount={10} dataKey="name" />
+        <YAxis hide={true} />
         <Tooltip />
-        <ReferenceArea x1={activeLabel} x2="10" y1={0} y2={10000} strokeOpacity={0.5} />
+        <ReferenceArea  x1={activeLabel} x2="10" y1={0} y2={10000} strokeOpacity={0.5} />
       </LineChart>
     </RespCtr>
   );

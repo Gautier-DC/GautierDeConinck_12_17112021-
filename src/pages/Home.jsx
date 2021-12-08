@@ -37,12 +37,16 @@ const DashboardCtnr = styled.div`
     align-items: center;
 `
 
-function Home(){
+function Home({user}){
+    if(!user){
+        return null
+    }
+    
     return(
         <main>
             <Aside />
             <MainContent>
-                <HelloUser>Bonjour <span>Thomas</span></HelloUser>
+                <HelloUser>Bonjour <span>{user.userInfos.firstName}</span></HelloUser>
                 <Baseline>Félicitation ! Vous avez explosé vos objectifs hier 👏</Baseline>
                 <DashboardCtnr>
                     <LeftDashboard/>
