@@ -10,21 +10,15 @@ const getUser = async(userId) =>{
 }
 
 
-const getUserActivity = async() =>{
+const getUserActivity = async(userId) =>{
     
-    return axios.get('http://localhost:3000/user/18/activity')
+    return axios.get(urlBase + userId + '/activity')
     
 }
 
-const getUserSessions = async() =>{
+const getUserSessions = async(userId) =>{
     
-    axios.get('http://localhost:3000/user/18/average-sessions')
-    .then(response => {
-        console.log(response.data);
-    })
-    .catch(error => {
-        console.log(error);
-    });
+    return axios.get(urlBase + userId + '/average-sessions')
 }
 
 const getUserPerf = async() =>{
