@@ -1,53 +1,54 @@
-import React from "react";
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, tickCount } from "recharts";
+import React, { useState, useEffect } from "react";
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, tickCount, Label } from "recharts";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
+import { getUserPerf } from "../../callAPI";
 
 const RespCtr = styled(ResponsiveContainer)`
   background-color: ${colors.tertiary};
   border-radius: 5px;
 `;
 
-const data = [
-  {
-    subject: "Math",
-    A: 120,
-    B: 110,
-    fullMark: 150,
-  },
-  {
-    subject: "Chinese",
-    A: 98,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: "English",
-    A: 86,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: "Geography",
-    A: 99,
-    B: 100,
-    fullMark: 150,
-  },
-  {
-    subject: "Physics",
-    A: 85,
-    B: 90,
-    fullMark: 150,
-  },
-  {
-    subject: "History",
-    A: 65,
-    B: 85,
-    fullMark: 150,
-  },
-];
+
+class CustomizedLabel {
+  render() {
+    const { x, y, stroke, value, kindValues } = this.props;
+
+    console.log('label custo', kindValues, value)
+
+    return (
+      <text x={x} y={y} dy={-4} fill={stroke} fontSize={10} textAnchor="middle">
+        {kindValues[value]}
+      </text>
+    );
+  }
+}
+
 
 export default function RadarStats() {
+
+  const [currentPerf, setCurrentPerf] = useState();
+
+  useEffect(() => {
+    getUserPerf(18)
+    .then((response) =>{
+      setCurrentPerf(response.data.data)
+      console.log('currentPerf', currentPerf)
+    })
+    .catch(error => {
+      console.log(error);
+  });
+  }, []);
+
+  useEffect(() => {
+    console.log('currentPerf', currentPerf)
+  }, [currentPerf]);
+
+  
+  if(!currentPerf){
+    return null
+  }
+
   return (
     <RespCtr width="33%" height={263}>
       <RadarChart
@@ -60,11 +61,13 @@ export default function RadarStats() {
         cx="50%"
         cy="50%"
         outerRadius="80%"
-        data={data}
+        data={currentPerf.data}
       >
         <PolarGrid radialLines={false} />
-        <PolarAngleAxis stroke="#fff" tickLine={false} dataKey="subject" tick={{ fontSize: 10 }} />
-        <Radar name="Mike" dataKey="A" fill={`${colors.primary}`} fillOpacity={0.6} />
+        <PolarAngleAxis stroke="#fff" tickLine={false} tick={{ fontSize: 10 }} dataKey="kind">
+          <Label content={<CustomizedLabel kindValues={Object.values(currentPerf.kind)} />} />
+        </PolarAngleAxis>
+        <Radar dataKey="value" fill={`${colors.primary}`} fillOpacity={0.6} />
       </RadarChart>
     </RespCtr>
   );

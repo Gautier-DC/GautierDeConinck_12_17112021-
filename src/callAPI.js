@@ -21,15 +21,9 @@ const getUserSessions = async(userId) =>{
     return axios.get(urlBase + userId + '/average-sessions')
 }
 
-const getUserPerf = async() =>{
+const getUserPerf = async(userId) =>{
     
-    axios.get('http://localhost:3000/user/18/performance')
-    .then(response => {
-        console.log(response.data);
-    })
-    .catch(error => {
-        console.log(error);
-    });
+    return axios.get(urlBase + userId + '/performance')
 }
 
 

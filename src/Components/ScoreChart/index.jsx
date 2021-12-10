@@ -31,6 +31,8 @@ const data = [
  ];
 
 export default function ScoreChart() {
+
+  
     return (
         <RespCtr width="30%" height={263}>
             <PieChart>
@@ -43,6 +45,7 @@ export default function ScoreChart() {
                 data={data}
                 innerRadius={70}
                 outerRadius={80}
+                cornerRadius={20}
                 dataKey="value"
                 margin={{
                   top: 10,
