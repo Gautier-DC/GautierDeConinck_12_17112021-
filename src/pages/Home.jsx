@@ -49,8 +49,8 @@ function Home({user}){
                 <HelloUser>Bonjour <span>{user.userInfos.firstName}</span></HelloUser>
                 <Baseline>Félicitation ! Vous avez explosé vos objectifs hier 👏</Baseline>
                 <DashboardCtnr>
-                    <LeftDashboard/>
-                    <RightDashboard/>
+                    <LeftDashboard score={user.score}/>
+                    <RightDashboard keyData={user.keyData}/>
                 </DashboardCtnr>
             </MainContent>
         </main>

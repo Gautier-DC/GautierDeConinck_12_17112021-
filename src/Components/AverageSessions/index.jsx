@@ -42,17 +42,15 @@ const StyledCursor = styled.div`
   }
 `;
 
-const dayArray = ["L", "M", "M", "J", "V", "S", "D"];
+// const renderCustomizedXTick = (props) => {
+//   const { x, y, payload } = props;
 
-const renderCustomizedXTick = (props) => {
-  const { x, y, payload } = props;
-
-  return (
-    <text x={x - 4} y={y + 4} textAnchor="middle" dominantBaseline="hanging">
-      {payload.value}
-    </text>
-  );
-};
+//   return (
+//     <text x={x - 4} y={y + 4} textAnchor="middle" dominantBaseline="hanging">
+//       {payload.value}
+//     </text>
+//   );
+// };
 
 function CustomTooltip({ active, payload }) {
   if (active) {
@@ -76,6 +74,17 @@ function CustomCursor({ active }) {
   }
 
   return null;
+}
+
+function formatXAxis(value) {
+  if(value === 1) return "L"
+  if(value === 2) return "M"
+  if(value === 3) return "M"
+  if(value === 4) return "J"
+  if(value === 5) return "V"
+  if(value === 6) return "S"
+  if(value === 7) return "D"
+  return value
 }
 
 export default function AverageSessions() {
@@ -108,11 +117,11 @@ export default function AverageSessions() {
         <text x={34} y={50} fill="#fff" fontSize={15} opacity={0.5} dominantBaseline="middle">
           sessions
         </text>
+        <Tooltip cursor={<CustomCursor/>} content={<CustomTooltip />} />
         <ReferenceArea x1={activeLabel} x2={currentSessions.sessions.lenght} y1={0} y2={80} stroke="#000" strokeOpacity={0.1} fill="#000" fillOpacity={0.1} />
         <Line dataKey="sessionLength" type="monotone" dot={false} stroke="#fff" strokeWidth={2} />
-        <XAxis dy={-40} stroke="#bdc3c7" opacity={0.6} axisLine={false} tickLine={false} dataKey="day" interval="preserveStartEnd" ticks={dayArray} />
+        <XAxis dy={-40} stroke="#bdc3c7" opacity={0.6} axisLine={false} tickLine={false} dataKey="day" interval="preserveStartEnd" tickFormatter={formatXAxis} />
         <YAxis domain={[0,80]} hide={true} />
-        <Tooltip cursor={<CustomCursor/>} content={<CustomTooltip />} />
       </LineChart>
     </RespCtr>
   );

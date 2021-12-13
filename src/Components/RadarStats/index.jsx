@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, tickCount, Label } from "recharts";
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer} from "recharts";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
 import { getUserPerf } from "../../callAPI";
@@ -10,18 +10,14 @@ const RespCtr = styled(ResponsiveContainer)`
 `;
 
 
-class CustomizedLabel {
-  render() {
-    const { x, y, stroke, value, kindValues } = this.props;
-
-    console.log('label custo', kindValues, value)
-
-    return (
-      <text x={x} y={y} dy={-4} fill={stroke} fontSize={10} textAnchor="middle">
-        {kindValues[value]}
-      </text>
-    );
-  }
+function formatPolarAxis(value) {
+  if(value === 1) return "Intensité"
+  if(value === 2) return "Vitesse"
+  if(value === 3) return "Force"
+  if(value === 4) return "Endurance"
+  if(value === 5) return "Energie"
+  if(value === 6) return "Cardio"
+  return value
 }
 
 
@@ -40,9 +36,9 @@ export default function RadarStats() {
   });
   }, []);
 
-  useEffect(() => {
-    console.log('currentPerf', currentPerf)
-  }, [currentPerf]);
+  // useEffect(() => {
+  //   console.log('currentPerf', currentPerf)
+  // }, [currentPerf]);
 
   
   if(!currentPerf){
@@ -54,8 +50,8 @@ export default function RadarStats() {
       <RadarChart
         margin={{
           top: 10,
-          right: 10,
-          left: 10,
+          right: 20,
+          left: 20,
           bottom: 10,
         }}
         cx="50%"
@@ -64,9 +60,7 @@ export default function RadarStats() {
         data={currentPerf.data}
       >
         <PolarGrid radialLines={false} />
-        <PolarAngleAxis stroke="#fff" tickLine={false} tick={{ fontSize: 10 }} dataKey="kind">
-          <Label content={<CustomizedLabel kindValues={Object.values(currentPerf.kind)} />} />
-        </PolarAngleAxis>
+        <PolarAngleAxis stroke="#fff" tickLine={false} tick={{ fontSize: 10 }} dataKey="kind" tickFormatter={formatPolarAxis} />
         <Radar dataKey="value" fill={`${colors.primary}`} fillOpacity={0.6} />
       </RadarChart>
     </RespCtr>

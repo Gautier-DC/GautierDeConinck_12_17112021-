@@ -17,13 +17,13 @@ const RightContainer = styled.div`
     height: 70vh;
 `
 
-function RightDashboard(){
+function RightDashboard({keyData}){
     return(
         <RightContainer>
-            <NutritionComponent icon={energy} bgColor="#fbeaea" data="1900kcal" label="Calories"/>
-            <NutritionComponent icon={chicken} bgColor="#e9f4fb" data="1900kcal" label="Protéines"/>
-            <NutritionComponent icon={apple} bgColor="#faf6e5" data="1900kcal" label="Glucides"/>
-            <NutritionComponent icon={cheeseburger} bgColor="#fbeaef" data="1900kcal" label="Lipides"/>
+            <NutritionComponent icon={energy} bgColor="#fbeaea" data={keyData.calorieCount + "kCal"} label="Calories"/>
+            <NutritionComponent icon={chicken} bgColor="#e9f4fb" data={keyData.proteinCount + "g"} label="Protéines"/>
+            <NutritionComponent icon={apple} bgColor="#faf6e5" data={keyData.carbohydrateCount + "g"} label="Glucides"/>
+            <NutritionComponent icon={cheeseburger} bgColor="#fbeaef" data={keyData.lipidCount + "g"} label="Lipides"/>
         </RightContainer>
     )
 }

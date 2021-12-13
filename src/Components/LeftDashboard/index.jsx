@@ -24,14 +24,14 @@ const UnderDshbrd = styled.div`
     height: 50%;
 `
 
-function LeftDashboard(){
+function LeftDashboard({score}){
     return(
         <LeftContainer>
             <DailyActivity />
             <UnderDshbrd>
                 <AverageSessions />
                 <RadarStats />
-                <ScoreChart />
+                <ScoreChart userScore={score}/>
             </UnderDshbrd>
         </LeftContainer>
     )

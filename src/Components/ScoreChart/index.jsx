@@ -25,13 +25,19 @@ const ScoreTxt = styled.tspan`
  ;
 `
 
-const data = [
-    { name: "Bubble Tea Sold", value: 10 },
-    { name: "Bubble Tea Left", value: 5},
+// const data = [
+//     { name: "Bubble Tea Sold", value: 10 },
+//     { name: "Bubble Tea Left", value: 5},
+//  ];
+
+export default function ScoreChart({userScore}) {
+
+  const data = [
+    { name: "Score", value: userScore },
+    { name: "Total", value: 1 - userScore},
  ];
 
-export default function ScoreChart() {
-
+ console.log(1 - userScore)
   
     return (
         <RespCtr width="30%" height={263}>
@@ -46,6 +52,8 @@ export default function ScoreChart() {
                 innerRadius={70}
                 outerRadius={80}
                 cornerRadius={20}
+                startAngle={90}
+                endAngle={450}
                 dataKey="value"
                 margin={{
                   top: 10,
@@ -54,30 +62,30 @@ export default function ScoreChart() {
                   bottom: 10,
                 }}
                 >
-                  <Label position="insideTopLeft" value="Score" dx={20} dy={-100} fill={`${colors.tertiary}`} fontWeight={700}/>
-                    {data.map((entry, index) => {
-                      if (index === 1) {
-                        return <Cell key={`cell-${index}`} stroke="none" filter="url(#shadow)" fill="#777777" opacity={0.1}/>; // make sure to map the index to the colour you want
-                      }
-                      return <Cell key={`cell-${index}`} fill={`${colors.primary}`} forceCornerRadius={true} radius={[6, 6, 6, 6]} />;
-                    })}                    
-                    <Label
-                    content={<CenterLabel noOfBubbleTeaSold={data[0].value} />}
-                    position="center"
-                    />
+                  {data.map((entry, index) => {
+                    if (index === 1) {
+                      return <Cell key={`cell-${index}`} stroke="none" filter="url(#shadow)" fill="#777777" opacity={0.1}/>; // make sure to map the index to the colour you want
+                    }
+                    return <Cell key={`cell-${index}`} fill={`${colors.primary}`} forceCornerRadius={true} radius={[6, 6, 6, 6]} />;
+                  })}                    
+                  <Label
+                  content={<CenterLabel userScore={data[0].value} />}
+                  position="center"
+                  />
+                  <Label position="center" dx={-60} dy={-100} value="Score" fill={`${colors.tertiary}`} fontWeight={700}/>
                 </Pie>
             </PieChart>
         </RespCtr>
     );
 }
 
-function CenterLabel({viewBox, noOfBubbleTeaSold = 0}) {
+function CenterLabel({viewBox, userScore = 0}) {
 const { cx, cy } = viewBox;
     return(
     <>
-      <text x={cx - 22} y={cy - 5}>
+      <text x={cx - 38} y={cy - 5}>
         <ScoreTitle>
-          {noOfBubbleTeaSold}
+          {userScore * 100}%
         </ScoreTitle>
       </text>
       <text x={cx - 27} y={cy + 15}>

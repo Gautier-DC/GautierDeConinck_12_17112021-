@@ -77,13 +77,14 @@ export default function DailyActivity() {
           stroke="#95a5a6"
           width={400}
         />
-        <YAxis dx={10} axisLine={false} tickLine={false} tickCount={3} dataKey="kilogram" orientation="right" stroke="#95a5a6" domain={[0, 500]}/>
+        <YAxis yAxisId="left-axis" orientation="left" hide={true} tickCount={3}/>
+        <YAxis yAxisId="right-axis" dx={10} axisLine={false} tickLine={false} tickCount={3} dataKey="kilogram" orientation="right" stroke="#95a5a6" />
         <Tooltip
-          content={<CustomTooltip />}
+          content={<CustomTooltip /> }
         />
         <Legend wrapperStyle={{ right: 10, top: 15 }} align="right" iconType="circle" iconSize="8" formatter={renderGreyLegendText} />'
-        <Bar dataKey="kilogram" fill={`${colors.tertiary}`} radius={[6, 6, 0, 0]} />
-        <Bar dataKey="calories" fill={`${colors.primary}`} radius={[6, 6, 0, 0]} />
+        <Bar dataKey="kilogram" yAxisId="right-axis"fill={`${colors.tertiary}`} radius={[6, 6, 0, 0]} />
+        <Bar dataKey="calories" yAxisId="left-axis" fill={`${colors.primary}`} radius={[6, 6, 0, 0]} />
       </BarChart>
     </RpCtr>
   );

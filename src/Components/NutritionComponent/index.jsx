@@ -5,11 +5,11 @@ import colors from '../../utils/style/colors';
 
 const NutritionCtr = styled.article`
     background-color: ${colors.bglight};
-    padding: 2em;
+    padding: 1.5em;
     border-radius: 5px;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     width: 100%;
     max-height: 124px;

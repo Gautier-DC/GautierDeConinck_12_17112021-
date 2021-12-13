@@ -24,6 +24,10 @@ function App() {
   });
   }, []);
 
+  useEffect(() => {
+    console.log('userInfo', currentUser)
+  }, [currentUser]);
+
   return (
     <Router>
       <Header/>
