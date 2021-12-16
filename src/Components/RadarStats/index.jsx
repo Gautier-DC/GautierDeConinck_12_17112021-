@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import propTypes from "prop-types";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer} from "recharts";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
-import { getUserPerf } from "../../callAPI";
 
 const RespCtr = styled(ResponsiveContainer)`
   background-color: ${colors.tertiary};
   border-radius: 5px;
 `;
 
-
+/**
+ * Transform numbers into labels for Xaxis
+ * @param {number} value 
+ * @returns string
+ */
 function formatPolarAxis(value) {
   if(value === 1) return "Intensité"
   if(value === 2) return "Vitesse"
@@ -21,27 +25,9 @@ function formatPolarAxis(value) {
 }
 
 
-export default function RadarStats() {
+export default function RadarStats({perf}) {
 
-  const [currentPerf, setCurrentPerf] = useState();
-
-  useEffect(() => {
-    getUserPerf(18)
-    .then((response) =>{
-      setCurrentPerf(response.data.data)
-      console.log('currentPerf', currentPerf)
-    })
-    .catch(error => {
-      console.log(error);
-  });
-  }, []);
-
-  // useEffect(() => {
-  //   console.log('currentPerf', currentPerf)
-  // }, [currentPerf]);
-
-  
-  if(!currentPerf){
+  if(!perf){
     return null
   }
 
@@ -57,7 +43,7 @@ export default function RadarStats() {
         cx="50%"
         cy="50%"
         outerRadius="80%"
-        data={currentPerf.data}
+        data={perf.data}
       >
         <PolarGrid radialLines={false} />
         <PolarAngleAxis stroke="#fff" tickLine={false} tick={{ fontSize: 10 }} dataKey="kind" tickFormatter={formatPolarAxis} />
@@ -65,4 +51,8 @@ export default function RadarStats() {
       </RadarChart>
     </RespCtr>
   );
+}
+
+RadarStats.propTypes = {
+  perf: propTypes.object,
 }

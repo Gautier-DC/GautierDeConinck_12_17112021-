@@ -1,5 +1,6 @@
 import React from "react";
-import { PieChart, Pie, YAxis,Sector, Cell, ResponsiveContainer, Label } from 'recharts';
+import propTypes from "prop-types";
+import { PieChart, Pie, Cell, ResponsiveContainer, Label } from 'recharts';
 import styled from 'styled-components';
 import colors from "../../utils/style/colors";
 
@@ -25,20 +26,16 @@ const ScoreTxt = styled.tspan`
  ;
 `
 
-// const data = [
-//     { name: "Bubble Tea Sold", value: 10 },
-//     { name: "Bubble Tea Left", value: 5},
-//  ];
+export default function ScoreChart({score}) {
 
-export default function ScoreChart({userScore}) {
-
+  //Array that will be used for the chart.
+  //First value "Score" is the the current score of the user 
+  //Second value "Fill" is the shadow that will fill the rest of the charts
   const data = [
-    { name: "Score", value: userScore },
-    { name: "Total", value: 1 - userScore},
- ];
+    { name: "Score", value: score },
+    { name: "Fill", value: 1 - score},
+  ];
 
- console.log(1 - userScore)
-  
     return (
         <RespCtr width="30%" height={263}>
             <PieChart>
@@ -69,7 +66,7 @@ export default function ScoreChart({userScore}) {
                     return <Cell key={`cell-${index}`} fill={`${colors.primary}`} forceCornerRadius={true} radius={[6, 6, 6, 6]} />;
                   })}                    
                   <Label
-                  content={<CenterLabel userScore={data[0].value} />}
+                  content={<CenterLabel displayedScore={data[0].value} />}
                   position="center"
                   />
                   <Label position="center" dx={-60} dy={-100} value="Score" fill={`${colors.tertiary}`} fontWeight={700}/>
@@ -79,13 +76,23 @@ export default function ScoreChart({userScore}) {
     );
 }
 
-function CenterLabel({viewBox, userScore = 0}) {
+ScoreChart.propTypes = {
+  score: propTypes.number,
+}
+
+
+/**
+ * Display message at the center of the chart
+ * @param {*} param0 
+ * @returns HTML element
+ */
+function CenterLabel({viewBox, displayedScore = 0}) {
 const { cx, cy } = viewBox;
     return(
     <>
       <text x={cx - 38} y={cy - 5}>
         <ScoreTitle>
-          {userScore * 100}%
+          {displayedScore * 100}%
         </ScoreTitle>
       </text>
       <text x={cx - 27} y={cy + 15}>

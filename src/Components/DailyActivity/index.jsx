@@ -1,8 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Text, Label } from "recharts";
+import React from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import colors from "../../utils/style/colors";
 import styled from "styled-components";
-import { getUserActivity } from "../../callAPI";
+
+
+
+const RpCtr = styled(ResponsiveContainer)`
+  background-color: ${colors.bglight};
+  border-radius: 5px;
+  height: 50%;
+  margin-bottom: 1em;
+  `;
 
 const StyledTooltip = styled.div`
   background-color: ${colors.primary};
@@ -17,45 +25,28 @@ const StyledTooltip = styled.div`
   align-items: center;
 `;
 
-const RpCtr = styled(ResponsiveContainer)`
-  background-color: ${colors.bglight};
-  border-radius: 5px;
-  max-width: 835px;
-  height: 50%;
-`;
-
 const GreyLegend = styled.span`
   color: ${colors.lighttxt};
+  font-size: 0.9em;
+  margin-left: 0.6em;
+  margin-right: 1em;
 `;
 
 
-export default function DailyActivity() {
+export default function DailyActivity({activity}) {
 
-  const [currentActivity, setCurrentActivity] = useState()
-
-  useEffect(() => {
-    getUserActivity(18)
-    .then((response) =>{
-      setCurrentActivity(response.data.data)
-    })
-    .catch(error => {
-      console.log(error);
-  });
-  }, []);
-
-  
-  if(!currentActivity){
+  if(!activity){
     return null
   }
   return (
     <RpCtr width="100%" height={320}>
       <BarChart
-        data={currentActivity.sessions}
+        data={activity.sessions}
         margin={{
-          top: 100,
+          top: 90,
           right: 30,
           left: 20,
-          bottom: 5,
+          bottom: 15,
         }}
         barSize={8}
         maxBarSize={500}
@@ -66,23 +57,23 @@ export default function DailyActivity() {
         </text>
         <CartesianGrid strokeDasharray="1" opacity={0.7} vertical={false} />
         <XAxis
-          dy={20}
+          dy={10}
           padding={{
-            right: -25,
-            left: -25,
+            right: -35,
+            left: -35,
           }}
           opacity={0.5}
           tickLine={false}
-          dataKey={currentActivity.sessions.index}
+          dataKey={activity.sessions.index}
           stroke="#95a5a6"
           width={400}
         />
-        <YAxis yAxisId="left-axis" orientation="left" hide={true} tickCount={3}/>
-        <YAxis yAxisId="right-axis" dx={10} axisLine={false} tickLine={false} tickCount={3} dataKey="kilogram" orientation="right" stroke="#95a5a6" />
+        <YAxis yAxisId="left-axis" orientation="left" hide={true} tickCount={3} domain={[0, 'dataMax']}/>
+        <YAxis yAxisId="right-axis" dx={10} axisLine={false} tickLine={false} tickCount={3} dataKey="kilogram" orientation="right" stroke="#95a5a6" domain={[68, 'dataMax']} />
         <Tooltip
           content={<CustomTooltip /> }
         />
-        <Legend wrapperStyle={{ right: 10, top: 15 }} align="right" iconType="circle" iconSize="8" formatter={renderGreyLegendText} />'
+        <Legend wrapperStyle={{ right: 30, top: 15 }} align="right" verticalAlign='middle' iconType="circle" iconSize="8" formatter={CustomLegend} />'
         <Bar dataKey="kilogram" yAxisId="right-axis"fill={`${colors.tertiary}`} radius={[6, 6, 0, 0]} />
         <Bar dataKey="calories" yAxisId="left-axis" fill={`${colors.primary}`} radius={[6, 6, 0, 0]} />
       </BarChart>
@@ -103,6 +94,9 @@ function CustomTooltip({ active, payload}) {
   return null;
 }
 
-function renderGreyLegendText(value) {
-  return <GreyLegend>{value}</GreyLegend>;
+//Format text of the legend
+function CustomLegend(value) {
+  if(value === 'kilogram'){
+  return <GreyLegend>Poids (kg)</GreyLegend>
+  } return <GreyLegend >Calories brûlées (kCal)</GreyLegend>
 }

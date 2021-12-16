@@ -1,6 +1,5 @@
 import React from "react";
 import styled from 'styled-components';
-import colors from '../../utils/style/colors';
 import NutritionComponent from "../NutritionComponent";
 import energy from '../../assets/icons/energy.svg'
 import chicken from '../../assets/icons/chicken.svg'
@@ -9,12 +8,16 @@ import cheeseburger from '../../assets/icons/cheeseburger.svg'
 
 const RightContainer = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    flex-basis: 25%;
-    max-width: 258px;
-    height: 70vh;
+    width: 100%;
+    height: 100%;
+    @media (min-width: 1200px) {
+        flex-direction: column;
+        flex-basis: 25%;
+        max-width: 258px;
+    }
 `
 
 function RightDashboard({keyData}){

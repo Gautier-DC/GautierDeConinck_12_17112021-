@@ -1,4 +1,5 @@
 import React from "react";
+import propTypes from "prop-types";
 import styled from 'styled-components';
 import colors from '../../utils/style/colors';
 
@@ -11,8 +12,11 @@ const NutritionCtr = styled.article`
     flex-direction: row;
     justify-content: start;
     align-items: center;
-    width: 100%;
+    width: 24%;
     max-height: 124px;
+    @media (min-width: 1200px) {
+        width: 100%;
+    }
 `
 
 const Icon = styled.img`
@@ -52,4 +56,11 @@ export default function NutritionComponent({icon, bgColor, data, label}){
             </InfoCtr>
         </NutritionCtr>
     )
+}
+
+NutritionComponent.propTypes = {
+    icon: propTypes.element,
+    bgColor: propTypes.string,
+    data: propTypes.number,
+    label: propTypes.string,
 }

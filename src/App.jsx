@@ -32,7 +32,7 @@ function App() {
     <Router>
       <Header/>
       <Routes>
-        <Route exact path='/' element={<Home user={currentUser}/>}>
+        <Route path='/' element={<Home user={currentUser}/>}>
         </Route>
       </Routes>   
     </Router>

@@ -1,4 +1,5 @@
 import React from "react";
+//import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import Aside from '../Components/Aside';
 import colors from '../utils/style/colors';
@@ -12,8 +13,10 @@ const MainContent = styled.section`
     flex-direction: column;
     justify-content: flex-start;
     flex-grow: 1;
-    height: 100vh;
-    padding: 4.5em 6.5em;
+    padding: 4.5em 2em;
+    @media (min-width: 1200px) {
+        padding: 4.5em 6.5em;
+    }
 `
 
 const HelloUser = styled.h1`
@@ -30,11 +33,13 @@ const Baseline = styled.p`
 
 const DashboardCtnr = styled.div`
     padding: 3em 0;
-    height: 100vh;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    @media (min-width: 1200px) {
+        flex-direction: row;
+    }
 `
 
 function Home({user}){
@@ -49,7 +54,7 @@ function Home({user}){
                 <HelloUser>Bonjour <span>{user.userInfos.firstName}</span></HelloUser>
                 <Baseline>Félicitation ! Vous avez explosé vos objectifs hier 👏</Baseline>
                 <DashboardCtnr>
-                    <LeftDashboard score={user.score}/>
+                    <LeftDashboard Id={user.id} userScore={user.score}/>
                     <RightDashboard keyData={user.keyData}/>
                 </DashboardCtnr>
             </MainContent>

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { LineChart, Line, XAxis, ReferenceArea, ReferenceLine, Tooltip, Legend, ResponsiveContainer, YAxis } from "recharts";
+import { LineChart, Line, XAxis, Tooltip, ResponsiveContainer, YAxis } from "recharts";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
-import { getUserSessions } from "../../callAPI";
+import propTypes from "prop-types";
 
 const RespCtr = styled(ResponsiveContainer)`
   background-color: ${colors.primary};
@@ -22,35 +21,22 @@ const StyledTooltip = styled.div`
   align-items: center;
 `;
 
-const StyledCursor = styled.div`
-  background-color: #fff;
-  opacity: 0.5;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
-  div{
-    background-color: #fff;
-    opacity: 0.5;
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-  }
-`;
+/**
+ * Create a custom cursor on mouse over the charts
+ * @param {number} param0 
+ * @returns HTML element
+ */
+export function StyledDot({ cx, cy }) {
+  return (
+    <svg>
+      <circle cx={cx} cy={cy} r={9} stroke="#FFFFFF0" fill="#FFF" fillOpacity={0.2}/>
+      <circle cx={cx} cy={cy} r={3} stroke="#FFFFFF" fill="#FFFFFF" />
+      <rect x={cx} y={0} width="100%" height="100%" fill="#00000020" />
+    </svg>
+  );
+}
 
-// const renderCustomizedXTick = (props) => {
-//   const { x, y, payload } = props;
-
-//   return (
-//     <text x={x - 4} y={y + 4} textAnchor="middle" dominantBaseline="hanging">
-//       {payload.value}
-//     </text>
-//   );
-// };
 
 function CustomTooltip({ active, payload }) {
   if (active) {
@@ -64,18 +50,12 @@ function CustomTooltip({ active, payload }) {
   return null;
 }
 
-function CustomCursor({ active }) {
-  if (active) {
-    return (
-      <StyledCursor>
-        <div></div>
-      </StyledCursor>
-    );
-  }
 
-  return null;
-}
-
+/**
+ * Change labels of the Xaxis
+ * @param {number} value 
+ * @returns string
+ */
 function formatXAxis(value) {
   if(value === 1) return "L"
   if(value === 2) return "M"
@@ -87,44 +67,36 @@ function formatXAxis(value) {
   return value
 }
 
-export default function AverageSessions() {
-  const [activeLabel, setActiveLabel] = useState("7");
+export default function AverageSessions({sessions}) {
 
-  const [currentSessions, setCurrentSessions] = useState();
-
-  useEffect(() => {
-    getUserSessions(18)
-      .then((response) => {
-        setCurrentSessions(response.data.data);
-        console.log("currentsessions", currentSessions);
-        console.log("sessions", response.data.data.sessions);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  if (!currentSessions) {
+  if (!sessions) {
     return null;
   }
 
   return (
     <RespCtr width="33%" height={263}>
-      <LineChart data={currentSessions.sessions} onMouseMove={(e) => setActiveLabel(e.activeLabel)} margin={{ left: -5, bottom: -30 }}>
+      <LineChart data={sessions.sessions} margin={{ left: -5, bottom: -30 }}>
         <text x={34} y={29} fill="#fff" fontSize={15} opacity={0.5} dominantBaseline="middle">
           Durée moyenne des
         </text>
         <text x={34} y={50} fill="#fff" fontSize={15} opacity={0.5} dominantBaseline="middle">
           sessions
         </text>
-        <Tooltip cursor={<CustomCursor/>} content={<CustomTooltip />} />
-        <ReferenceArea x1={activeLabel} x2={currentSessions.sessions.lenght} y1={0} y2={80} stroke="#000" strokeOpacity={0.1} fill="#000" fillOpacity={0.1} />
-        <Line dataKey="sessionLength" type="monotone" dot={false} stroke="#fff" strokeWidth={2} />
-        <XAxis dy={-40} stroke="#bdc3c7" opacity={0.6} axisLine={false} tickLine={false} dataKey="day" interval="preserveStartEnd" tickFormatter={formatXAxis} />
+        <Tooltip cursor={false} content={<CustomTooltip />} />
+        <Line activeDot={StyledDot} dataKey="sessionLength" type="monotone" dot={false} stroke="#fff" strokeWidth={2} />
+        <XAxis dy={-40} stroke="#bdc3c7" opacity={0.6} axisLine={false} tickLine={false} dataKey="day" interval="preserveStartEnd" tick={{
+            fill: "#FFFFFF75",
+            fontFamily: "Roboto",
+            fontSize: "12px",
+          }} tickFormatter={formatXAxis} />
         <YAxis domain={[0,80]} hide={true} />
       </LineChart>
     </RespCtr>
   );
+}
+
+AverageSessions.propTypes = {
+  sessions: propTypes.object,
 }
 
 
