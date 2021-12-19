@@ -1,8 +1,8 @@
 import React from 'react';
+import propTypes from 'prop-types';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import colors from "../../utils/style/colors";
 import styled from "styled-components";
-
 
 
 const RpCtr = styled(ResponsiveContainer)`
@@ -31,7 +31,6 @@ const GreyLegend = styled.span`
   margin-left: 0.6em;
   margin-right: 1em;
 `;
-
 
 export default function DailyActivity({activity}) {
 
@@ -67,6 +66,7 @@ export default function DailyActivity({activity}) {
           dataKey={activity.sessions.index}
           stroke="#95a5a6"
           width={400}
+          tickFormatter={formatXAxis}
         />
         <YAxis yAxisId="left-axis" orientation="left" hide={true} tickCount={3} domain={[0, 'dataMax']}/>
         <YAxis yAxisId="right-axis" dx={10} axisLine={false} tickLine={false} tickCount={3} dataKey="kilogram" orientation="right" stroke="#95a5a6" domain={[68, 'dataMax']} />
@@ -79,6 +79,17 @@ export default function DailyActivity({activity}) {
       </BarChart>
     </RpCtr>
   );
+}
+
+DailyActivity.propTypes = {
+  activity: propTypes.shape({
+    userId: propTypes.number,
+    sessions: propTypes.arrayOf(propTypes.shape({
+      day: propTypes.string,
+      kilogram: propTypes.number,
+      calories: propTypes.number,
+    }))
+  })
 }
 
 function CustomTooltip({ active, payload}) {
@@ -99,4 +110,13 @@ function CustomLegend(value) {
   if(value === 'kilogram'){
   return <GreyLegend>Poids (kg)</GreyLegend>
   } return <GreyLegend >Calories brûlées (kCal)</GreyLegend>
+}
+
+/**
+ * Change labels of the Xaxis
+ * @param {number} value 
+ * @returns string
+ */
+ function formatXAxis(value) {
+  return value + 1
 }

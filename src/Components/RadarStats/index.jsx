@@ -54,5 +54,14 @@ export default function RadarStats({perf}) {
 }
 
 RadarStats.propTypes = {
-  perf: propTypes.object,
+  perf: propTypes.arrayOf(propTypes.shape({
+    userId: propTypes.number,
+    kind: propTypes.shape({
+      index: propTypes.string,
+    }),
+    data: propTypes.arrayOf(propTypes.shape({
+      value: propTypes.number,
+      kind: propTypes.number,
+    }))
+  }))
 }

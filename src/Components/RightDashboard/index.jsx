@@ -1,4 +1,5 @@
 import React from "react";
+import propTypes from "prop-types";
 import styled from 'styled-components';
 import NutritionComponent from "../NutritionComponent";
 import energy from '../../assets/icons/energy.svg'
@@ -32,3 +33,12 @@ function RightDashboard({keyData}){
 }
 
 export default RightDashboard
+
+RightDashboard.propTypes = {
+    keyData: propTypes.shape({
+        calorieCount: propTypes.number,
+        proteinCount: propTypes.number,
+        carbohydrateCount: propTypes.number,
+        lipidCount: propTypes.number
+    })
+}

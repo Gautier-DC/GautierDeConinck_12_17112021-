@@ -96,7 +96,11 @@ export default function AverageSessions({sessions}) {
 }
 
 AverageSessions.propTypes = {
-  sessions: propTypes.object,
+  sessions: propTypes.arrayOf(propTypes.shape({
+    day: propTypes.string,
+    kilogram: propTypes.number,
+    calories: propTypes.number,
+  }))
 }
 
 

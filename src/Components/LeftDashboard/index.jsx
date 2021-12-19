@@ -45,24 +45,18 @@ function LeftDashboard({userScore, Id}){
           .catch((error) => {
             console.log(error);
           });
-      }, []);
-
-    useEffect(() => {
         getUserActivity(Id)
         .then((response) =>{
             setCurrentActivity(response.data.data)
             })
-            .catch(error => {
+        .catch(error => {
             console.log(error);
         });
-    }, []);
-
-    useEffect(() => {
         getUserPerf(Id)
         .then((response) =>{
             setCurrentPerf(response.data.data)
             })
-            .catch(error => {
+        .catch(error => {
             console.log(error);
         });
     }, []);

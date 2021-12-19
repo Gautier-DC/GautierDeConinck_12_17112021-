@@ -1,4 +1,5 @@
 import React from "react";
+import propTypes from "prop-types";
 //import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import Aside from '../Components/Aside';
@@ -62,3 +63,21 @@ function Home({user}){
     )
 }
 export default Home
+
+Home.propTypes = {
+    user: propTypes.arrayOf(propTypes.shape({
+        id: propTypes.number,
+        userInfos: propTypes.shape({
+            firstName: propTypes.string,
+            lastName: propTypes.string,
+            age: propTypes.number,
+        }),
+        todayScore: propTypes.number,
+        keyData: propTypes.shape({
+            calorieCount: propTypes.number,
+            proteinCount: propTypes.number,
+            carbohydrateCount: propTypes.number,
+            lipidCount: propTypes.number
+        })
+    }))
+}
