@@ -59,7 +59,7 @@ function LeftDashboard({userScore, Id}){
         .catch(error => {
             console.log(error);
         });
-    }, []);
+    }, [Id]);
 
     return(
         <LeftContainer>

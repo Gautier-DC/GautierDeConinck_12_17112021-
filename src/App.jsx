@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,34 +6,17 @@ import {
 } from "react-router-dom";
 import Header from './Components/Header';
 import Home from './pages/Home';
-import { getUser } from './callAPI';
+import Connection from './Components/Connection';
 
 
-function App() {
-
-  const [currentUser, setCurrentUser] = useState()
-
-  useEffect(() => {
-    getUser(18)
-    .then((response) =>{
-      console.log('*****', response);
-      setCurrentUser(response.data.data)
-    })
-    .catch(error => {
-      console.log(error);
-  });
-  }, []);
-
-  useEffect(() => {
-    console.log('userInfo', currentUser)
-  }, [currentUser]);
+function App() {  
 
   return (
     <Router>
       <Header/>
       <Routes>
-        <Route path='/' element={<Home user={currentUser}/>}>
-        </Route>
+        <Route exact path='/' element={<Connection/>}/>
+        <Route path='/:id' element={<Home/>} />
       </Routes>   
     </Router>
   );
