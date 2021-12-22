@@ -30,7 +30,7 @@ export default function RadarStats({perf}) {
   if(!perf){
     return null
   }
-
+  console.log('sessions', perf)
   return (
     <RespCtr width="33%" height={263}>
       <RadarChart
@@ -54,14 +54,19 @@ export default function RadarStats({perf}) {
 }
 
 RadarStats.propTypes = {
-  perf: propTypes.arrayOf(propTypes.shape({
+  perf: propTypes.shape({
     userId: propTypes.number,
     kind: propTypes.shape({
-      index: propTypes.string,
+      '1': propTypes.string,
+      '2': propTypes.string,
+      '3': propTypes.string,
+      '4': propTypes.string,
+      '5': propTypes.string,
+      '6': propTypes.string,
     }),
     data: propTypes.arrayOf(propTypes.shape({
       value: propTypes.number,
       kind: propTypes.number,
     }))
-  }))
+  })
 }

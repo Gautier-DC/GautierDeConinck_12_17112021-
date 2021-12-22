@@ -53,7 +53,6 @@ function Home(){
         if(id) {
             getUser(id)
             .then((response) =>{
-            console.log('*****', response);
             setCurrentUser(response.data.data)
             })
             .catch(error => {

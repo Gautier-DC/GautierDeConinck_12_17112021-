@@ -59,8 +59,8 @@ export default function NutritionComponent({icon, bgColor, data, label}){
 }
 
 NutritionComponent.propTypes = {
-    icon: propTypes.element,
+    icon: propTypes.string,
     bgColor: propTypes.string,
-    data: propTypes.number,
+    data: propTypes.string,
     label: propTypes.string,
 }

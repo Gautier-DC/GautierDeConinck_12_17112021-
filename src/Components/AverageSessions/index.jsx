@@ -72,7 +72,7 @@ export default function AverageSessions({sessions}) {
   if (!sessions) {
     return null;
   }
-
+  
   return (
     <RespCtr width="33%" height={263}>
       <LineChart data={sessions.sessions} margin={{ left: -5, bottom: -30 }}>
@@ -96,11 +96,11 @@ export default function AverageSessions({sessions}) {
 }
 
 AverageSessions.propTypes = {
-  sessions: propTypes.arrayOf(propTypes.shape({
+  sessions: propTypes.shape({
     day: propTypes.string,
     kilogram: propTypes.number,
     calories: propTypes.number,
-  }))
+  })
 }
 
 

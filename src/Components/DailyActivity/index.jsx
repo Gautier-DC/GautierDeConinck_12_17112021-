@@ -69,7 +69,7 @@ export default function DailyActivity({activity}) {
           tickFormatter={formatXAxis}
         />
         <YAxis yAxisId="left-axis" orientation="left" hide={true} tickCount={3} domain={[0, 'dataMax']}/>
-        <YAxis yAxisId="right-axis" dx={10} axisLine={false} tickLine={false} tickCount={3} dataKey="kilogram" orientation="right" stroke="#95a5a6" domain={[68, 'dataMax']} />
+        <YAxis yAxisId="right-axis" dx={10} axisLine={false} tickLine={false} tickCount={3} dataKey="kilogram" orientation="right" stroke="#95a5a6" domain={[dataMax => (dataMax - 1), 'dataMax']} />
         <Tooltip
           content={<CustomTooltip /> }
         />
