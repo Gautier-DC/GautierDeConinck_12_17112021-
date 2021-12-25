@@ -76,6 +76,6 @@ function LeftDashboard({userScore, Id}){
 export default LeftDashboard
 
 LeftDashboard.propTypes = {
-    score: propTypes.number,
+    userScore: propTypes.number,
     Id: propTypes.number,
 }
