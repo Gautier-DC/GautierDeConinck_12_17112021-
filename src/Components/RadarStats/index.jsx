@@ -30,7 +30,7 @@ export default function RadarStats({perf}) {
   if(!perf){
     return null
   }
-  console.log('sessions', perf)
+  
   return (
     <RespCtr width="33%" height={263}>
       <RadarChart
