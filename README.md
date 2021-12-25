@@ -7,6 +7,8 @@ This project is linked to an API that you can find here (https://github.com/Open
 
 You need to install Node.js v14.15.4 or latestversion.
 
+I am using docker in order to run the API (https://github.com/Gautier-DC/P12-back-end-dashboard.git) on localhost 3000, so you will have to install it if you want to have the same result. Everything is explained in the Github Repo.
+
 ## Used Technologies
 
 - React :

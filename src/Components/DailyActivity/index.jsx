@@ -1,7 +1,16 @@
-import React from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Text, Label } from "recharts";
+import React from 'react';
+import propTypes from 'prop-types';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import colors from "../../utils/style/colors";
 import styled from "styled-components";
+
+
+const RpCtr = styled(ResponsiveContainer)`
+  background-color: ${colors.bglight};
+  border-radius: 5px;
+  height: 50%;
+  margin-bottom: 1em;
+  `;
 
 const StyledTooltip = styled.div`
   background-color: ${colors.primary};
@@ -16,90 +25,27 @@ const StyledTooltip = styled.div`
   align-items: center;
 `;
 
-const RpCtr = styled(ResponsiveContainer)`
-  background-color: ${colors.bglight};
-  border-radius: 5px;
-  max-width: 835px;
-  height: 50%;
-`;
-
 const GreyLegend = styled.span`
   color: ${colors.lighttxt};
+  font-size: 0.9em;
+  margin-left: 0.6em;
+  margin-right: 1em;
 `;
 
-const data = [
-  {
-    name: "1",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "2",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "3",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "4",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "5",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "6",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "7",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: "8",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "9",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: "10",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-];
+export default function DailyActivity({activity}) {
 
-export default function DailyActivity() {
+  if(!activity){
+    return null
+  }
   return (
     <RpCtr width="100%" height={320}>
       <BarChart
-        data={data}
+        data={activity.sessions}
         margin={{
-          top: 100,
+          top: 90,
           right: 30,
           left: 20,
-          bottom: 5,
+          bottom: 15,
         }}
         barSize={8}
         maxBarSize={500}
@@ -110,36 +56,48 @@ export default function DailyActivity() {
         </text>
         <CartesianGrid strokeDasharray="1" opacity={0.7} vertical={false} />
         <XAxis
-          dy={20}
+          dy={10}
           padding={{
-            right: -25,
-            left: -25,
+            right: -35,
+            left: -35,
           }}
           opacity={0.5}
           tickLine={false}
-          dataKey="name"
+          dataKey={activity.sessions.index}
           stroke="#95a5a6"
           width={400}
+          tickFormatter={formatXAxis}
         />
-        <YAxis dx={10} axisLine={false} tickLine={false} tickCount={3} orientation="right" stroke="#95a5a6" />
+        <YAxis yAxisId="left-axis" orientation="left" hide={true} tickCount={3} domain={[0, 'dataMax']}/>
+        <YAxis yAxisId="right-axis" dx={10} axisLine={false} tickLine={false} tickCount={3} dataKey="kilogram" orientation="right" stroke="#95a5a6" domain={[dataMax => (dataMax - 1), 'dataMax']} />
         <Tooltip
-          content={<CustomTooltip />}
+          content={<CustomTooltip /> }
         />
-        <Legend wrapperStyle={{ right: 10, top: 15 }} align="right" iconType="circle" iconSize="8" formatter={renderGreyLegendText} />'
-        <Bar dataKey="pv" fill={`${colors.tertiary}`} radius={[6, 6, 0, 0]} />
-        <Bar dataKey="uv" fill={`${colors.primary}`} radius={[6, 6, 0, 0]} />
+        <Legend wrapperStyle={{ right: 30, top: 15 }} align="right" verticalAlign='middle' iconType="circle" iconSize="8" formatter={CustomLegend} />'
+        <Bar dataKey="kilogram" yAxisId="right-axis"fill={`${colors.tertiary}`} radius={[6, 6, 0, 0]} />
+        <Bar dataKey="calories" yAxisId="left-axis" fill={`${colors.primary}`} radius={[6, 6, 0, 0]} />
       </BarChart>
     </RpCtr>
   );
 }
 
-function CustomTooltip({ active, payload, label }) {
-  console.log('++++', active)
+DailyActivity.propTypes = {
+  activity: propTypes.shape({
+    userId: propTypes.number,
+    sessions: propTypes.arrayOf(propTypes.shape({
+      day: propTypes.string,
+      kilogram: propTypes.number,
+      calories: propTypes.number,
+    }))
+  })
+}
+
+function CustomTooltip({ active, payload}) {
   if (active) {
     return (
       <StyledTooltip>
-        <p>{`${label}`}</p>
-        <p>{`${label}`}</p>
+        <p>{`${payload[0].value} kg`}</p>
+        <p>{`${payload[1].value} Kcal`}</p>
       </StyledTooltip>
     );
   }
@@ -147,6 +105,18 @@ function CustomTooltip({ active, payload, label }) {
   return null;
 }
 
-function renderGreyLegendText(value) {
-  return <GreyLegend>{value}</GreyLegend>;
+//Format text of the legend
+function CustomLegend(value) {
+  if(value === 'kilogram'){
+  return <GreyLegend>Poids (kg)</GreyLegend>
+  } return <GreyLegend >Calories brûlées (kCal)</GreyLegend>
+}
+
+/**
+ * Change labels of the Xaxis
+ * @param {number} value 
+ * @returns string
+ */
+ function formatXAxis(value) {
+  return value + 1
 }

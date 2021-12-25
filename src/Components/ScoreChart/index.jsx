@@ -1,5 +1,6 @@
 import React from "react";
-import { PieChart, Pie, YAxis,Sector, Cell, ResponsiveContainer, Label } from 'recharts';
+import propTypes from "prop-types";
+import { PieChart, Pie, Cell, ResponsiveContainer, Label } from 'recharts';
 import styled from 'styled-components';
 import colors from "../../utils/style/colors";
 
@@ -25,12 +26,16 @@ const ScoreTxt = styled.tspan`
  ;
 `
 
-const data = [
-    { name: "Bubble Tea Sold", value: 10 },
-    { name: "Bubble Tea Left", value: 5},
- ];
+export default function ScoreChart({score}) {
 
-export default function ScoreChart() {
+  //Array that will be used for the chart.
+  //First value "Score" is the the current score of the user 
+  //Second value "Fill" is the shadow that will fill the rest of the charts
+  const data = [
+    { name: "Score", value: score },
+    { name: "Fill", value: 1 - score},
+  ];
+
     return (
         <RespCtr width="30%" height={263}>
             <PieChart>
@@ -43,6 +48,9 @@ export default function ScoreChart() {
                 data={data}
                 innerRadius={70}
                 outerRadius={80}
+                cornerRadius={20}
+                startAngle={90}
+                endAngle={450}
                 dataKey="value"
                 margin={{
                   top: 10,
@@ -51,30 +59,40 @@ export default function ScoreChart() {
                   bottom: 10,
                 }}
                 >
-                  <Label position="insideTopLeft" value="Score" dx={20} dy={-100} fill={`${colors.tertiary}`} fontWeight={700}/>
-                    {data.map((entry, index) => {
-                      if (index === 1) {
-                        return <Cell key={`cell-${index}`} stroke="none" filter="url(#shadow)" fill="#777777" opacity={0.1}/>; // make sure to map the index to the colour you want
-                      }
-                      return <Cell key={`cell-${index}`} fill={`${colors.primary}`} forceCornerRadius={true} radius={[6, 6, 6, 6]} />;
-                    })}                    
-                    <Label
-                    content={<CenterLabel noOfBubbleTeaSold={data[0].value} />}
-                    position="center"
-                    />
+                  {data.map((entry, index) => {
+                    if (index === 1) {
+                      return <Cell key={`cell-${index}`} stroke="none" filter="url(#shadow)" fill="#777777" opacity={0.1}/>; // make sure to map the index to the colour you want
+                    }
+                    return <Cell key={`cell-${index}`} fill={`${colors.primary}`} forceCornerRadius={true} radius={[6, 6, 6, 6]} />;
+                  })}                    
+                  <Label
+                  content={<CenterLabel displayedScore={data[0].value} />}
+                  position="center"
+                  />
+                  <Label position="center" dx={-60} dy={-100} value="Score" fill={`${colors.tertiary}`} fontWeight={700}/>
                 </Pie>
             </PieChart>
         </RespCtr>
     );
 }
 
-function CenterLabel({viewBox, noOfBubbleTeaSold = 0}) {
+ScoreChart.propTypes = {
+  score: propTypes.number,
+}
+
+
+/**
+ * Display message at the center of the chart
+ * @param {*} param0 
+ * @returns HTML element
+ */
+function CenterLabel({viewBox, displayedScore = 0}) {
 const { cx, cy } = viewBox;
     return(
     <>
-      <text x={cx - 22} y={cy - 5}>
+      <text x={cx - 38} y={cy - 5}>
         <ScoreTitle>
-          {noOfBubbleTeaSold}
+          {displayedScore * 100}%
         </ScoreTitle>
       </text>
       <text x={cx - 27} y={cy + 15}>
