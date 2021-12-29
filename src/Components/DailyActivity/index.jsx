@@ -115,7 +115,7 @@ function CustomLegend(value) {
 /**
  * Change labels of the Xaxis
  * @param {number} value 
- * @returns string
+ * @returns number
  */
  function formatXAxis(value) {
   return value + 1
