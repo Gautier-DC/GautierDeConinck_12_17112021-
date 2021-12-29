@@ -2,12 +2,14 @@ import serviceAPI from "./serviceAPI";
 import serviceMock from "./serviceMock";
 
 //If you want to switch from API to Mock :
-//Return serviceMock in every method instead of serviceAPI 
-//Use the road http://localhost:3001/1 (you can put any userid, /42 will also work) to see the result
+//Define const service with the one that you need (serviceAPI for API and serviceMock for mock) 
+//Use the road http://localhost:3001/1 (you can put any userid, /42 will also work for example) to see the result
+
+const service = serviceAPI ;
 
 export class Models {
   static async getUser(userId) {
-    return serviceMock.getUser(userId).then((response) => {
+    return service.getUser(userId).then((response) => {
       /**
        * /Format the line in order to have the right name "score" for this data
        * @param {object} data 
@@ -45,7 +47,7 @@ export class Models {
   }
 
   static async getUserActivity(userId) {
-    return serviceMock.getUserActivity(userId).then((response) => {
+    return service.getUserActivity(userId).then((response) => {
       const userActivity = {
         userId: response.id,
         sessions: response.sessions,
@@ -56,7 +58,7 @@ export class Models {
   }
 
   static async getUserSessions(userId) {
-    return serviceMock.getUserSessions(userId).then((response) => {
+    return service.getUserSessions(userId).then((response) => {
       const userSessions = {
         userId: response.id,
         sessions: response.sessions,
@@ -67,7 +69,7 @@ export class Models {
   }
 
   static async getUserPerf(userId) {
-    return serviceMock.getUserPerf(userId).then((response) => {
+    return service.getUserPerf(userId).then((response) => {
       const userPerf = {
         userId: response.id,
         kind: response.kind,
